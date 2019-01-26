@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -31,6 +32,22 @@ public class GameManager : MonoBehaviour {
     private int mCurrentWallIndex;
     [SerializeField]
     private const int WallLength = 6;
+    [SerializeField]
+    private float mFadeDeltaTime;
+    [SerializeField]
+    private float mFadeInTime;
+    [SerializeField]
+    private float mFadeOutTime;
+    [SerializeField]
+    private float mStayFadeInTime;
+
+    [Header("Boolean Data")]
+    [SerializeField]
+    private bool bOnFadeIn;
+    [SerializeField]
+    private bool bOnFadeOut;
+    [SerializeField]
+    private bool bOnStayFade;
 
     [System.Serializable]
     class WallMesh
@@ -45,16 +62,18 @@ public class GameManager : MonoBehaviour {
 
     [Header("Reference Obejct")]
     [SerializeField]
-    private WallMesh mWallMesh; 
+    private WallMesh mWallMesh;
+    [SerializeField]
+    private Image mFadeIn_OutImage;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+    // Use this for initialization
+    void Start() {
+
+    }
+
+    // Update is called once per frame
+    void Update() {
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             mCurrentWallIndex++;
@@ -66,8 +85,17 @@ public class GameManager : MonoBehaviour {
 
             ChangeCurrentMaterial(mCurrentWallIndex);
         }
-	}
 
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            bOnFadeIn = true;
+        }
+
+        StartFadeIn_Out();
+
+    }
+
+    #region Change Wall Material
     void ChangeCurrentMaterial(int arrayIndex)
     {
         mCurrentWallMaterial = mAllWallMaterialGroup[arrayIndex];
@@ -106,6 +134,68 @@ public class GameManager : MonoBehaviour {
                 mWallMesh.Up.material = mCurrentWallMaterial.UpMaterial;
                 break;
         }
-    } 
+    }
+    #endregion
 
+    #region Fade In/Out
+    void StartFadeIn_Out()
+    {
+        if (bOnFadeIn)
+        {
+            StartFadeIn(mFadeInTime);
+        }
+        else if (bOnStayFade)
+        {
+            StayFade(mStayFadeInTime);
+        }
+        else if (bOnFadeOut)
+        {
+            StartFadeOut(mFadeOutTime);
+        }
+    }
+
+    void StartFadeIn(float fadeInTime)
+    {
+        Color tempColor = mFadeIn_OutImage.color;
+
+        mFadeDeltaTime += Time.deltaTime;
+        tempColor.a = Mathf.Lerp(0, 1, mFadeDeltaTime / fadeInTime);
+        mFadeIn_OutImage.color = tempColor;
+
+        if (mFadeDeltaTime >= fadeInTime)
+        {
+            bOnFadeIn = false;
+            bOnStayFade = true;
+            mFadeDeltaTime = 0.0f;
+        }
+    }
+
+    void StartFadeOut(float fadeOutTime)
+    {
+        Color tempColor = mFadeIn_OutImage.color;
+
+        mFadeDeltaTime += Time.deltaTime;
+        tempColor.a = Mathf.Lerp(1, 0, mFadeDeltaTime / fadeOutTime);
+        mFadeIn_OutImage.color = tempColor;
+
+        if (mFadeDeltaTime >= fadeOutTime)
+        {
+            mFadeDeltaTime = 0.0f;
+            bOnFadeOut = false;
+        }
+    }
+
+    void StayFade(float stayFadeTime)
+    {
+        mFadeDeltaTime += Time.deltaTime;
+
+        if (mFadeDeltaTime >= stayFadeTime)
+        {
+            mFadeDeltaTime = 0.0f;
+            bOnStayFade = false;
+            bOnFadeOut = true;
+        }
+    }
+
+    #endregion
 }
