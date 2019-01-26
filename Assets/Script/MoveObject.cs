@@ -51,6 +51,7 @@ public class MoveObject : EventableObject {
         EndEvent();
         yield return null;
     }
+    #endregion
 
     #region override
     public override void Activate()
