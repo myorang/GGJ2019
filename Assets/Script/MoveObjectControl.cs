@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveObject : EventableObject {
+public class MoveObjectControl : EventableObject {
 
     [Header("Move Object")]
     [SerializeField]

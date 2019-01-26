@@ -47,12 +47,14 @@ public class GameManager : MonoBehaviour {
     [Header("Reference Obejct")]
     [SerializeField]
     private WallMesh mWallMesh;
+
+    [Header("Start Event Object")]
     [SerializeField]
-    private Image mFadeIn_OutImage;
+    private EventableObject mStartEventObject;
 
     // Use this for initialization
     void Start() {
-
+        mStartEventObject.Activate();
     }
 
     // Update is called once per frame

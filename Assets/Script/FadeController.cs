@@ -123,8 +123,7 @@ public class FadeController : EventableObject {
                 ActiveTitle(true);
             }
         }
-
-        ActiveTitle(false);
+        
         EndEvent();
         mFade_Object.GetComponent<GameObject>().SetActive(false);
     }
