@@ -12,15 +12,15 @@ public class EventableObject : MonoBehaviour
         }
     }
 
-    public virtual void Activate()
+    public virtual void Activate(string enmberatorName)
     {
-        StartEvent();
+        StartEvent(enmberatorName);
     }
 
-    protected virtual void StartEvent()
+    protected virtual void StartEvent(string enmberatorName)
     {
         isPlaying = true;
-        StartCoroutine("Rootine");
+        StartCoroutine(enmberatorName);
     }
 
     protected virtual void EndEvent()

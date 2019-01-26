@@ -24,17 +24,17 @@ public class CameraZoom : EventableObject
     {
         if (isStart)
         {
-            Activate();
+            Activate("Rootine");
             isStart = false;
         }
     }
 #endif
 
-    public override void Activate()
+    public override void Activate(string enmberatorName)
     {
         m_BasePOV = m_MainCamera.fieldOfView;
 
-        base.Activate();
+        base.Activate("Rootine");
     }
 
     public IEnumerator Rootine()

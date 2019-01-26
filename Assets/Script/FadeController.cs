@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FadeController : MonoBehaviour {
+public class FadeController : EventableObject {
 
     [Header("Reference Obejct")]
     [SerializeField]
@@ -26,32 +26,13 @@ public class FadeController : MonoBehaviour {
     private bool bOnFadeOut;
     [SerializeField]
     private bool bOnStayFade;
+    [SerializeField]
+    private bool isStart;
+
+    [SerializeField]
+    private const string IEnumberatorName = "StartFade";
 
     #region Private Fade In/Out
-
-    IEnumerator StartFade()
-    {
-        bOnFadeIn = true;
-
-        while(bOnFadeIn)
-        {
-            StartFadeIn(mFadeInTime, Time.fixedDeltaTime);
-            yield return new WaitForFixedUpdate();
-        }
-
-        while(bOnStayFade)
-        {
-            StayFade(mStayFadeInTime, Time.fixedDeltaTime);
-            yield return new WaitForFixedUpdate();
-        }
-
-        while(bOnFadeOut)
-        {
-            StartFadeOut(mFadeOutTime, Time.fixedDeltaTime);
-            yield return new WaitForFixedUpdate();
-        }
-    }
-
     void StartFadeIn(float fadeInTime, float fixedTime)
     {
         Color tempColor = mFade_Object.color;
@@ -97,16 +78,39 @@ public class FadeController : MonoBehaviour {
     #endregion
 
     #region Public Fade Function
-    public void StartFadeEvent()
+    public IEnumerator StartFade()
     {
-        StartCoroutine("StartFade");
+        bOnFadeIn = true;
+
+        while (bOnFadeIn)
+        {
+            StartFadeIn(mFadeInTime, Time.fixedDeltaTime);
+            yield return new WaitForFixedUpdate();
+        }
+
+        while (bOnStayFade)
+        {
+            StayFade(mStayFadeInTime, Time.fixedDeltaTime);
+            yield return new WaitForFixedUpdate();
+        }
+
+        while (bOnFadeOut)
+        {
+            StartFadeOut(mFadeOutTime, Time.fixedDeltaTime);
+            yield return new WaitForFixedUpdate();
+        }
+    }
+    #endregion
+
+    #region override
+    public override void Activate(string enmberatorName)
+    {
+        base.Activate(enmberatorName);
     }
 
-    public void SetFadeTimse(int fadeInTime, int fadeOutTime, int stayfadeTime)
+    protected override void EndEvent()
     {
-        mFadeInTime = fadeInTime;
-        mFadeOutTime = fadeOutTime;
-        mStayFadeInTime = stayfadeTime;
+        base.EndEvent();
     }
     #endregion
 }
