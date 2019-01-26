@@ -35,7 +35,7 @@ public class CameraRotation : MonoBehaviour {
         }
     }
 
-    void ActiveGyroscope(bool active)
+    public void ActiveGyroscope(bool active)
     {
         mGyroscope.enabled = active;
         bIsSupportGyroscope = active;
