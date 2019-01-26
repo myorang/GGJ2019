@@ -197,5 +197,12 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public void SetFadeTimse(int fadeInTime, int fadeOutTime, int stayfadeTime)
+    {
+        mFadeInTime = fadeInTime;
+        mFadeOutTime = fadeOutTime;
+        mStayFadeInTime = stayfadeTime;
+    }
+
     #endregion
 }
