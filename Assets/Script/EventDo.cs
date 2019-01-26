@@ -20,7 +20,7 @@ public class EventableObject : MonoBehaviour
     protected virtual void StartEvent(string enmberatorName)
     {
         isPlaying = true;
-        StartCoroutine(enmberatorName);
+        StartCoroutine("Rootine");
     }
 
     protected virtual void EndEvent()
