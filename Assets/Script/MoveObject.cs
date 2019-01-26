@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveObject : EventableObject {
+public class MoveObject : EventableObject
+{
 
     [Header("Move Object")]
     [SerializeField]
@@ -20,15 +21,17 @@ public class MoveObject : EventableObject {
     [SerializeField]
     private iTweenEvent mBehavior;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     #region IEnumerator 
     IEnumerator Rootine()
@@ -40,7 +43,7 @@ public class MoveObject : EventableObject {
         while (true)
         {
             tempTime += Time.fixedDeltaTime;
-            
+
             if (tempTime >= mTweenTime)
             {
                 break;
@@ -51,6 +54,7 @@ public class MoveObject : EventableObject {
         EndEvent();
         yield return null;
     }
+    #endregion
 
     #region override
     public override void Activate()
