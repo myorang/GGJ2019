@@ -32,9 +32,44 @@ public class FadeController : EventableObject {
     private bool bOnStayFade;
     [SerializeField]
     private bool isStart;
-
+    [SerializeField]
+    private bool bEndOfPause;
+    [SerializeField]
+    private bool bCheckClick = false;
+    
+    [Header("Next Event")]
     [SerializeField]
     private EventableObject mCameraMove;
+
+    [Header("Active Object")]
+    [SerializeField]
+    private GameObject[] mEventButtonGroup;
+
+    [Header("Target Transform")]
+    [SerializeField]
+    private Transform mClockTarget;
+    [SerializeField]
+    private Transform mFlowerTarget;
+    [SerializeField]
+    private Transform mWindowTarget;
+
+    enum ButtonState
+    {
+        Clock, Flower, Window
+    }
+
+    private void Update()
+    {
+        if (isStart == false)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                bEndOfPause = false;
+                ActiveTitle(false);
+            }
+        }
+
+    }
 
     #region Private Fade In/Out
     void StartFadeIn(float fadeInTime, float fixedTime)
@@ -80,12 +115,24 @@ public class FadeController : EventableObject {
         }
     }
 
-   void ActiveTitle(bool active)
+    void ActiveTitle(bool active)
     {
         if (mTitleObject != null)
         {
             mTitleObject.SetActive(active);
         }
+
+        if (active == false)
+        {
+            if (mEventButtonGroup.Length > 0)
+            {
+                for (int index = 0; index < mEventButtonGroup.Length; index++)
+                {
+                    mEventButtonGroup[index].SetActive(true);
+                }
+            }
+        }
+
     }
     #endregion
 
@@ -123,9 +170,8 @@ public class FadeController : EventableObject {
                 ActiveTitle(true);
             }
         }
-        
+
         EndEvent();
-        mFade_Object.GetComponent<GameObject>().SetActive(false);
     }
     #endregion
 
@@ -137,9 +183,12 @@ public class FadeController : EventableObject {
 
     protected override void NextEvent()
     {
-        if (mCameraMove != null)
+        if (!bEndOfPause)
         {
-            mCameraMove.Activate();
+            if (mCameraMove != null)
+            {
+                mCameraMove.Activate();
+            }
         }
 
         base.NextEvent();
@@ -148,6 +197,46 @@ public class FadeController : EventableObject {
     protected override void EndEvent()
     {
         base.EndEvent();
+    }
+    #endregion
+
+    #region Button Function
+    public void ClockButton()
+    {
+        if (mClockTarget != null)
+        {
+            TargetObjectGroup(false);
+            mCameraMove.GetComponent<CameraRotationControl>().TargetTransform = mClockTarget;
+            NextEvent();
+        }
+    }
+
+    public void FlowerButton()
+    {
+        if (mFlowerTarget != null)
+        {
+            TargetObjectGroup(false);
+            mCameraMove.GetComponent<CameraRotationControl>().TargetTransform = mFlowerTarget;
+            NextEvent();
+        }
+    }
+
+    public void WindowButton()
+    {
+        if (mWindowTarget != null)
+        {
+            TargetObjectGroup(false);
+            mCameraMove.GetComponent<CameraRotationControl>().TargetTransform = mWindowTarget;
+            NextEvent();
+        }
+    } 
+
+    private void TargetObjectGroup(bool _b)
+    {
+        for (int index = 0; index < mEventButtonGroup.Length; index++)
+        {
+            mEventButtonGroup[index].SetActive(_b);
+        }
     }
     #endregion
 }
