@@ -1,10 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EventDo : MonoBehaviour
+public class EventableObject : MonoBehaviour
 {
-    public virtual void ActiveEvent()
+    protected bool isPlaying;
+    public bool IsPlaying
     {
+        get
+        {
+            return isPlaying;
+        }
+    }
 
+    public virtual void Activate()
+    {
+        StartEvent();
+    }
+
+    protected virtual void StartEvent()
+    {
+        isPlaying = true;
+        StartCoroutine("Rootine");
+    }
+
+    protected virtual void EndEvent()
+    {
+        isPlaying = false;
     }
 }
