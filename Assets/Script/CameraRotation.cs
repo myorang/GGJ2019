@@ -12,12 +12,15 @@ public class CameraRotation : MonoBehaviour {
 	void Start () {
 
         StartGyroscope();
-        ActiveGyroscope(bIsSupportGyroscope);
+        
+        if (bIsActiveGyroscope)
+        {
+            ActiveGyroscope(bIsSupportGyroscope);
+        }
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
 		if (bIsSupportGyroscope)
         {
             transform.rotation = mGyroscope.attitude;
@@ -29,7 +32,7 @@ public class CameraRotation : MonoBehaviour {
     {
         bIsSupportGyroscope = SystemInfo.supportsGyroscope;
 
-        if (bIsSupportGyroscope)
+        if (mGyroscope.enabled)
         {
             mGyroscope = Input.gyro;
         }
@@ -37,7 +40,11 @@ public class CameraRotation : MonoBehaviour {
 
     public void ActiveGyroscope(bool active)
     {
+        if (!bIsSupportGyroscope)
+        {
+            return;
+        }
+
         mGyroscope.enabled = active;
-        bIsSupportGyroscope = active;
     }
 }

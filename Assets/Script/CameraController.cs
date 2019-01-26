@@ -11,6 +11,7 @@ public class CameraController : MonoBehaviour
     public float m_RotateSpeed = 0.1f;
 
     public bool isStart = false;
+
     public void Update()
     {
         if(isStart)
@@ -28,7 +29,8 @@ public class CameraController : MonoBehaviour
     IEnumerator CameraRotating(float time, GameObject target)
     {
         if (m_Gyro != null)
-            m_Gyro.ActiveGyroscope(true);
+            m_Gyro.ActiveGyroscope(false);
+
         float _endTime = time, _nowTime = 0f;
 
         Quaternion targetRotation 
@@ -45,7 +47,8 @@ public class CameraController : MonoBehaviour
         }
 
         if (m_Gyro != null)
-            m_Gyro.ActiveGyroscope(false);
+            m_Gyro.ActiveGyroscope(true);
+
         yield return null;
     }
 }

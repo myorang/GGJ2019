@@ -8,12 +8,12 @@ public class GameManager : MonoBehaviour {
     [System.Serializable]
     class WallMaterial
     {
-        public Material ForntMaterial;
-        public Material BehindMaterial;
+        public Material PlaneMaterial;
+        public Material BackMaterial;
         public Material LeftMaterial;
         public Material RigthMaterial;
-        public Material DownMaterial;
-        public Material UpMaterial;
+        public Material FrontMaterial;
+        public Material RoofMaterial;
     }
 
     [Header("Material")]
@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour {
 
     enum Wall
     {
-        Front, Behind, Left, Right, Down, Up
+        Plane, Back, Left, Right, Front, Roof
     }
 
     [Header("Index Data")]
@@ -32,32 +32,16 @@ public class GameManager : MonoBehaviour {
     private int mCurrentWallIndex;
     [SerializeField]
     private const int WallLength = 6;
-    [SerializeField]
-    private float mFadeDeltaTime;
-    [SerializeField]
-    private float mFadeInTime;
-    [SerializeField]
-    private float mFadeOutTime;
-    [SerializeField]
-    private float mStayFadeInTime;
-
-    [Header("Boolean Data")]
-    [SerializeField]
-    private bool bOnFadeIn;
-    [SerializeField]
-    private bool bOnFadeOut;
-    [SerializeField]
-    private bool bOnStayFade;
 
     [System.Serializable]
     class WallMesh
     {
-        public MeshRenderer Front;
-        public MeshRenderer Behind;
+        public MeshRenderer Plane;
+        public MeshRenderer Back;
         public MeshRenderer Left;
         public MeshRenderer Right;
-        public MeshRenderer Down;
-        public MeshRenderer Up;
+        public MeshRenderer Front;
+        public MeshRenderer Roof;
     }
 
     [Header("Reference Obejct")]
@@ -73,7 +57,6 @@ public class GameManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
             mCurrentWallIndex++;
@@ -85,14 +68,6 @@ public class GameManager : MonoBehaviour {
 
             ChangeCurrentMaterial(mCurrentWallIndex);
         }
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            bOnFadeIn = true;
-        }
-
-        StartFadeIn_Out();
-
     }
 
     #region Change Wall Material
@@ -110,12 +85,12 @@ public class GameManager : MonoBehaviour {
     {
         switch (wallIndex)
         {
-            case (int)Wall.Front:
-                mWallMesh.Front.material = mCurrentWallMaterial.ForntMaterial;
+            case (int)Wall.Plane:
+                mWallMesh.Plane.material = mCurrentWallMaterial.PlaneMaterial;
                 break;
 
-            case (int)Wall.Behind:
-                mWallMesh.Behind.material = mCurrentWallMaterial.BehindMaterial;
+            case (int)Wall.Back:
+                mWallMesh.Back.material = mCurrentWallMaterial.BackMaterial;
                 break;
 
             case (int)Wall.Left:
@@ -126,83 +101,16 @@ public class GameManager : MonoBehaviour {
                 mWallMesh.Right.material = mCurrentWallMaterial.RigthMaterial;
                 break;
 
-            case (int)Wall.Down:
-                mWallMesh.Down.material = mCurrentWallMaterial.DownMaterial;
+            case (int)Wall.Front:
+                mWallMesh.Front.material = mCurrentWallMaterial.FrontMaterial;
                 break;
 
-            case (int)Wall.Up:
-                mWallMesh.Up.material = mCurrentWallMaterial.UpMaterial;
+            case (int)Wall.Roof:
+                mWallMesh.Roof.material = mCurrentWallMaterial.RoofMaterial;
                 break;
         }
     }
     #endregion
 
-    #region Fade In/Out
-    void StartFadeIn_Out()
-    {
-        if (bOnFadeIn)
-        {
-            StartFadeIn(mFadeInTime);
-        }
-        else if (bOnStayFade)
-        {
-            StayFade(mStayFadeInTime);
-        }
-        else if (bOnFadeOut)
-        {
-            StartFadeOut(mFadeOutTime);
-        }
-    }
-
-    void StartFadeIn(float fadeInTime)
-    {
-        Color tempColor = mFadeIn_OutImage.color;
-
-        mFadeDeltaTime += Time.deltaTime;
-        tempColor.a = Mathf.Lerp(0, 1, mFadeDeltaTime / fadeInTime);
-        mFadeIn_OutImage.color = tempColor;
-
-        if (mFadeDeltaTime >= fadeInTime)
-        {
-            bOnFadeIn = false;
-            bOnStayFade = true;
-            mFadeDeltaTime = 0.0f;
-        }
-    }
-
-    void StartFadeOut(float fadeOutTime)
-    {
-        Color tempColor = mFadeIn_OutImage.color;
-
-        mFadeDeltaTime += Time.deltaTime;
-        tempColor.a = Mathf.Lerp(1, 0, mFadeDeltaTime / fadeOutTime);
-        mFadeIn_OutImage.color = tempColor;
-
-        if (mFadeDeltaTime >= fadeOutTime)
-        {
-            mFadeDeltaTime = 0.0f;
-            bOnFadeOut = false;
-        }
-    }
-
-    void StayFade(float stayFadeTime)
-    {
-        mFadeDeltaTime += Time.deltaTime;
-
-        if (mFadeDeltaTime >= stayFadeTime)
-        {
-            mFadeDeltaTime = 0.0f;
-            bOnStayFade = false;
-            bOnFadeOut = true;
-        }
-    }
-
-    public void SetFadeTimse(int fadeInTime, int fadeOutTime, int stayfadeTime)
-    {
-        mFadeInTime = fadeInTime;
-        mFadeOutTime = fadeOutTime;
-        mStayFadeInTime = stayfadeTime;
-    }
-
-    #endregion
+    
 }
