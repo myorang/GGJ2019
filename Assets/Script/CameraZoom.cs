@@ -24,17 +24,17 @@ public class CameraZoom : EventableObject
     {
         if (isStart)
         {
-            Activate("Rootine");
+            Activate();
             isStart = false;
         }
     }
 #endif
 
-    public override void Activate(string enmberatorName)
+    public override void Activate()
     {
         m_BasePOV = m_MainCamera.fieldOfView;
 
-        base.Activate("Rootine");
+        base.Activate();
     }
 
     public IEnumerator Rootine()
@@ -47,6 +47,7 @@ public class CameraZoom : EventableObject
             m_NowTime += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
+        EndEvent();
         yield return null;
     }
 

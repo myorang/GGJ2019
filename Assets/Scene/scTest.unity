@@ -1084,6 +1084,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c55cf7a221063418265c3a779c4d60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_eventlist: []
+  m_eventlists: []
 --- !u!1 &1219125787
 GameObject:
   m_ObjectHideFlags: 0
@@ -1094,6 +1096,7 @@ GameObject:
   - component: {fileID: 1219125788}
   - component: {fileID: 1219125790}
   - component: {fileID: 1219125789}
+  - component: {fileID: 1219125791}
   m_Layer: 5
   m_Name: FadeImage
   m_TagString: Untagged
@@ -1153,6 +1156,29 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1219125787}
   m_CullTransparentMesh: 0
+--- !u!114 &1219125791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1219125787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 703a9f552d573e84eafab61481b4492a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mFade_Object: {fileID: 1219125789}
+  mTitleObject: {fileID: 0}
+  mFadeDeltaTime: 0
+  mFadeInTime: 1
+  mFadeOutTime: 1
+  mStayFadeInTime: 0.5
+  mRefeatNumber: 3
+  bOnFadeIn: 0
+  bOnFadeOut: 0
+  bOnStayFade: 0
+  isStart: 0
+  mCameraMove: {fileID: 0}
 --- !u!1 &1220456341 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100010, guid: e4784829eb850e141b19788888c646af,
