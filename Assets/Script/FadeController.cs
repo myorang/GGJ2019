@@ -8,6 +8,8 @@ public class FadeController : EventableObject {
     [Header("Reference Obejct")]
     [SerializeField]
     private Image mFade_Object;
+    [SerializeField]
+    private GameObject mTitleObject;
 
     [Header("Fade Control Time")]
     [SerializeField]
@@ -18,6 +20,8 @@ public class FadeController : EventableObject {
     private float mFadeOutTime;
     [SerializeField]
     private float mStayFadeInTime;
+    [SerializeField]
+    private int mRefeatNumber;
 
     [Header("Boolean Data")]
     [SerializeField]
@@ -30,7 +34,7 @@ public class FadeController : EventableObject {
     private bool isStart;
 
     [SerializeField]
-    private const string IEnumberatorName = "StartFade";
+    private EventableObject mCameraMove;
 
     #region Private Fade In/Out
     void StartFadeIn(float fadeInTime, float fixedTime)
@@ -75,37 +79,71 @@ public class FadeController : EventableObject {
             bOnFadeOut = true;
         }
     }
-    #endregion
 
-    #region Public Fade Function
-    public IEnumerator StartFade()
+   void ActiveTitle(bool active)
     {
-        bOnFadeIn = true;
-
-        while (bOnFadeIn)
+        if (mTitleObject != null)
         {
-            StartFadeIn(mFadeInTime, Time.fixedDeltaTime);
-            yield return new WaitForFixedUpdate();
-        }
-
-        while (bOnStayFade)
-        {
-            StayFade(mStayFadeInTime, Time.fixedDeltaTime);
-            yield return new WaitForFixedUpdate();
-        }
-
-        while (bOnFadeOut)
-        {
-            StartFadeOut(mFadeOutTime, Time.fixedDeltaTime);
-            yield return new WaitForFixedUpdate();
+            mTitleObject.SetActive(active);
         }
     }
     #endregion
 
-    #region override
-    public override void Activate(string enmberatorName)
+    #region Public Fade Function
+    public IEnumerator Rootine()
     {
-        base.Activate(enmberatorName);
+        int tempRefeat = 0;
+
+        while (tempRefeat < mRefeatNumber)
+        {
+            bOnFadeIn = true;
+
+            while (bOnFadeIn)
+            {
+                StartFadeIn(mFadeInTime, Time.fixedDeltaTime);
+                yield return new WaitForFixedUpdate();
+            }
+
+            while (bOnStayFade)
+            {
+                StayFade(mStayFadeInTime, Time.fixedDeltaTime);
+                yield return new WaitForFixedUpdate();
+            }
+
+            while (bOnFadeOut)
+            {
+                StartFadeOut(mFadeOutTime, Time.fixedDeltaTime);
+                yield return new WaitForFixedUpdate();
+            }
+
+            tempRefeat++;
+
+            if (tempRefeat == 3)
+            {
+                ActiveTitle(true);
+            }
+        }
+
+        ActiveTitle(false);
+        EndEvent();
+        mFade_Object.GetComponent<GameObject>().SetActive(false);
+    }
+    #endregion
+
+    #region override
+    public override void Activate()
+    {
+        base.Activate();
+    }
+
+    protected override void NextEvent()
+    {
+        if (mCameraMove != null)
+        {
+            mCameraMove.Activate();
+        }
+
+        base.NextEvent();
     }
 
     protected override void EndEvent()
