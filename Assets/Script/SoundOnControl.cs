@@ -8,10 +8,6 @@ public class SoundOnControl : EventableObject {
     [SerializeField]
     private AudioSource mAudioSource;
 
-    [Header("Boolean Data")]
-    [SerializeField]
-    private bool bIsLoof;
-
     [Header("Stop Sound")]
     [SerializeField]
     private AudioSource mStopSound;
@@ -19,6 +15,14 @@ public class SoundOnControl : EventableObject {
     [Header("Next Event")]
     [SerializeField]
     private EventableObject mNextEvent;
+
+    [Header("Icon Groups")]
+    [SerializeField]
+    private GameObject[] Icons;
+
+    [Header("LookAt Target")]
+    [SerializeField]
+    private Transform mTarget;
 
     // Use this for initialization
     void Start () {
@@ -33,8 +37,6 @@ public class SoundOnControl : EventableObject {
     #region IEnumerator
     IEnumerator Rootine()
     {
-        mAudioSource.loop = bIsLoof;
-
         if (mStopSound != null)
         {
             mStopSound.Stop();
@@ -69,7 +71,20 @@ public class SoundOnControl : EventableObject {
 
     protected override void EndEvent()
     {
+        if (Icons.Length > 0)
+        {
+            for (int index = 0; index < Icons.Length; index++)
+            {
+                //LooatAt(Icons[index]);
+                Icons[index].SetActive(true);
+            }
+        }
         base.EndEvent();
     }
     #endregion
+
+    private void LooatAt(GameObject iconObj)
+    {
+        iconObj.transform.LookAt(mTarget);
+    }
 }

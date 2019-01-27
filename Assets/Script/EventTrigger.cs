@@ -21,6 +21,7 @@ public class EventTrigger : MonoBehaviour
         print("next!");
 
         m_NowPlayIdx++;
+
         if (m_eventlist.Count > m_NowPlayIdx)
         {
             m_eventlist[m_NowPlayIdx].Activate();
