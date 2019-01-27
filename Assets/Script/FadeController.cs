@@ -178,6 +178,7 @@ public class FadeController : EventableObject {
     #region override
     public override void Activate()
     {
+        isStart = true;
         base.Activate();
     }
 
@@ -196,6 +197,7 @@ public class FadeController : EventableObject {
 
     protected override void EndEvent()
     {
+        isStart = false;
         base.EndEvent();
     }
     #endregion
