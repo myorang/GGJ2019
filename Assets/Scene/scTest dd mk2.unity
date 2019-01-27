@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.45114553, g: 0.49975944, b: 0.56766605, a: 1}
+  m_IndirectSpecularColor: {r: 0.4511451, g: 0.49975842, b: 0.56766474, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -902,7 +902,7 @@ Transform:
   - {fileID: 693560013}
   - {fileID: 99743188}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1034138263
 GameObject:
@@ -1219,7 +1219,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4040583123717990, guid: cbe88441f7ecba84ba569024d2dbdbb0, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4897576615787132, guid: cbe88441f7ecba84ba569024d2dbdbb0, type: 2}
       propertyPath: m_LocalScale.x
@@ -1400,7 +1400,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4297152771286292, guid: cbe88441f7ecba84ba569024d2dbdbb0, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4881388417373152, guid: cbe88441f7ecba84ba569024d2dbdbb0, type: 2}
       propertyPath: m_RootOrder
@@ -1506,9 +1506,9 @@ MonoBehaviour:
   mCameraMove: {fileID: 1336184775}
   mEventButtonGroup:
   - {fileID: 1273962660}
-  mClockTarget: {fileID: 0}
   mFlowerTarget: {fileID: 0}
-  mWindowTarget: {fileID: 1220456342}
+  mClockTarget: {fileID: 0}
+  mTalkTarget: {fileID: 0}
 --- !u!1 &1220456341 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100010, guid: e4784829eb850e141b19788888c646af,
@@ -1736,7 +1736,9 @@ MonoBehaviour:
   mTargetTransform: {fileID: 1220456342}
   mRotateTime: 10
   mRotateSpeed: 0.25
-  _SameTimeEvent: {fileID: 618357188}
+  _SameTimeEvent:
+  - {fileID: 0}
+  _NaxtEvent: {fileID: 0}
 --- !u!1001 &1592026159
 Prefab:
   m_ObjectHideFlags: 0

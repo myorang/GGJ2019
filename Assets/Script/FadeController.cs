@@ -53,6 +53,26 @@ public class FadeController : EventableObject {
     [SerializeField]
     private Transform mTalkTarget;
 
+    [Header("Set Event")]
+
+    [Header("Flower")]
+    [SerializeField]
+    private EventableObject[] mSame_FlowerEvent;
+    [SerializeField]
+    private EventableObject mNext_FlowerEvent;
+
+    [Header("Clock")]
+    [SerializeField]
+    private EventableObject[] mSame_ClockEvent;
+    [SerializeField]
+    private EventableObject mNext_ClockEvent;
+
+    [Header("Talk")]
+    [SerializeField]
+    private EventableObject[] mSame_TalkEvent;
+    [SerializeField]
+    private EventableObject mNext_TalkEvent;
+
     enum ButtonState
     {
         Clock, Flower, Window
@@ -209,8 +229,11 @@ public class FadeController : EventableObject {
         {
             TargetObjectGroup(false);
             mCameraMove.GetComponent<CameraRotationControl>().TargetTransform = mClockTarget;
+            mCameraMove.GetComponent<CameraRotationControl>()._SameTimeEvent = mSame_ClockEvent;
+            mCameraMove.GetComponent<CameraRotationControl>()._NaxtEvent = mNext_ClockEvent;
             NextEvent();
         }
+
     }
 
     public void FlowerButton()
@@ -219,6 +242,8 @@ public class FadeController : EventableObject {
         {
             TargetObjectGroup(false);
             mCameraMove.GetComponent<CameraRotationControl>().TargetTransform = mFlowerTarget;
+            mCameraMove.GetComponent<CameraRotationControl>()._SameTimeEvent = mSame_FlowerEvent;
+            mCameraMove.GetComponent<CameraRotationControl>()._NaxtEvent = mNext_FlowerEvent;
             NextEvent();
         }
     }
@@ -229,6 +254,8 @@ public class FadeController : EventableObject {
         {
             TargetObjectGroup(false);
             mCameraMove.GetComponent<CameraRotationControl>().TargetTransform = mTalkTarget;
+            mCameraMove.GetComponent<CameraRotationControl>()._SameTimeEvent = mSame_TalkEvent;
+            mCameraMove.GetComponent<CameraRotationControl>()._NaxtEvent = mNext_TalkEvent;
             NextEvent();
         }
     } 

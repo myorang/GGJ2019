@@ -8,6 +8,9 @@ public class SoundOffControl : EventableObject {
     [SerializeField]
     private AudioSource mAudioSource;
 
+    [Header("Next Event")]
+    [SerializeField]
+    private EventableObject mNextEvent;
 	// Use this for initialization
 	void Start () {
 		
@@ -42,6 +45,10 @@ public class SoundOffControl : EventableObject {
 
     protected override void NextEvent()
     {
+        if (mNextEvent != null)
+        {
+            mNextEvent.Activate();
+        }
         base.NextEvent();
     }
 

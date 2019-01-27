@@ -35,12 +35,11 @@ public class CameraRotationControl : EventableObject {
     private float mRotateSpeed;
 
     [Header("At the same time turn on Event")]
-    [SerializeField]
-    private EventableObject[] _SameTimeEvent;
+    public EventableObject[] _SameTimeEvent;
 
     [Header("Next Event")]
     [SerializeField]
-    private EventableObject _NaxtEvent;
+    public EventableObject _NaxtEvent;
 
     // Use this for initialization
     void Start()

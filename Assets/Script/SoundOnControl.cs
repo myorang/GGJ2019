@@ -12,6 +12,14 @@ public class SoundOnControl : EventableObject {
     [SerializeField]
     private bool bIsLoof;
 
+    [Header("Stop Sound")]
+    [SerializeField]
+    private AudioSource mStopSound;
+
+    [Header("Next Event")]
+    [SerializeField]
+    private EventableObject mNextEvent;
+
     // Use this for initialization
     void Start () {
 		
@@ -26,6 +34,11 @@ public class SoundOnControl : EventableObject {
     IEnumerator Rootine()
     {
         mAudioSource.loop = bIsLoof;
+
+        if (mStopSound != null)
+        {
+            mStopSound.Stop();
+        }
 
         if (mAudioSource != null)
         {
@@ -46,6 +59,11 @@ public class SoundOnControl : EventableObject {
 
     protected override void NextEvent()
     {
+        if (mNextEvent != null)
+        {
+            mNextEvent.Activate();
+        }
+
         base.NextEvent();
     }
 
