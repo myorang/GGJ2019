@@ -36,7 +36,11 @@ public class CameraRotationControl : EventableObject {
 
     [Header("At the same time turn on Event")]
     [SerializeField]
-    private EventableObject _SameTimeEvent;
+    private EventableObject[] _SameTimeEvent;
+
+    [Header("Next Event")]
+    [SerializeField]
+    private EventableObject _NaxtEvent;
 
     // Use this for initialization
     void Start()
@@ -79,9 +83,12 @@ public class CameraRotationControl : EventableObject {
     #region override
     public override void Activate()
     {
-        if (_SameTimeEvent != null)
+        if (_SameTimeEvent.Length > 0)
         {
-            _SameTimeEvent.Activate();
+            for (int index = 0; index < _SameTimeEvent.Length; index++)
+            {
+                _SameTimeEvent[index].Activate();
+            }
         }
 
         base.Activate();
@@ -89,6 +96,11 @@ public class CameraRotationControl : EventableObject {
 
     protected override void NextEvent()
     {
+        if (_NaxtEvent != null)
+        {
+            _NaxtEvent.Activate();
+        }
+
         base.NextEvent();
     }
 
