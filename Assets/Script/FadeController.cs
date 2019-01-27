@@ -47,11 +47,11 @@ public class FadeController : EventableObject {
 
     [Header("Target Transform")]
     [SerializeField]
-    private Transform mClockTarget;
-    [SerializeField]
     private Transform mFlowerTarget;
     [SerializeField]
-    private Transform mWindowTarget;
+    private Transform mClockTarget;
+    [SerializeField]
+    private Transform mTalkTarget;
 
     enum ButtonState
     {
@@ -223,12 +223,12 @@ public class FadeController : EventableObject {
         }
     }
 
-    public void WindowButton()
+    public void TalkButton()
     {
-        if (mWindowTarget != null)
+        if (mTalkTarget != null)
         {
             TargetObjectGroup(false);
-            mCameraMove.GetComponent<CameraRotationControl>().TargetTransform = mWindowTarget;
+            mCameraMove.GetComponent<CameraRotationControl>().TargetTransform = mTalkTarget;
             NextEvent();
         }
     } 
