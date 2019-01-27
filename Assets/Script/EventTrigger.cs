@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(BoxCollider))]
 public class EventTrigger : MonoBehaviour
 {
     public List<EventableObject> m_eventlist;
@@ -13,16 +12,18 @@ public class EventTrigger : MonoBehaviour
     {
         print("touch!");
 
-        //m_eventlist[0].Activate();
+        m_eventlist[0].Activate();
         m_NowPlayIdx = 0;
     }
 
     public void NextEvent()
     {
+        print("next!");
+
         m_NowPlayIdx++;
         if (m_eventlist.Count > m_NowPlayIdx)
         {
-            //m_eventlist[m_NowPlayIdx].Activate();
+            m_eventlist[m_NowPlayIdx].Activate();
         }
     }
 }

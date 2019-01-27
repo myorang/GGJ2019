@@ -25,7 +25,6 @@ public class EventableObject : MonoBehaviour
 
     protected virtual void NextEvent()
     {
-        
     }
 
     protected virtual void EndEvent()
