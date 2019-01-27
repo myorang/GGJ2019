@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EventSpriteRotate : EventableObject
 {
-    public EventTrigger trigger;
+    public EventTrigger2 trigger;
     public List<EventableObject> m_ActivateWith;
 
     public float m_NowTime;
@@ -30,7 +30,7 @@ public class EventSpriteRotate : EventableObject
 
     public override void Activate()
     {
-        trigger = GetComponentInParent<EventTrigger>();
+        trigger = GetComponentInParent<EventTrigger2>();
         m_BasePos = m_Target.anchoredPosition;
         m_BaseAngle = m_Target.rotation.eulerAngles;
         base.Activate();

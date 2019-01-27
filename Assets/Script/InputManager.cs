@@ -15,9 +15,14 @@ public class InputManager : MonoBehaviour
             if (hit.collider != null)
             {
                 print(hit.transform.name);
-                EventTrigger _event = hit.transform.gameObject.GetComponent<EventTrigger>();
+                EventTrigger2 _event = hit.transform.gameObject.GetComponent<EventTrigger2>();
                 if (_event != null)
                     _event.ActiveEvent();
+
+                GameobjectOn _on = hit.transform.gameObject.GetComponent<GameobjectOn>();
+                if (_on != null)
+                    _on.Active();
+
             }
         }
     }
