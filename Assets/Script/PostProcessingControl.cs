@@ -18,11 +18,31 @@ public class PostProcessingControl : EventableObject {
     private bool bIsUpper;
     [SerializeField]
     private bool bIsDowner;
+    [SerializeField]
+    private bool bSetDisActiveDepth;
 
+    [SerializeField]
+    private EventableObject mNextEvent;
+
+    [SerializeField]
+    private bool bGrainOn;
+    [SerializeField]
+    private float mGrainTime;
 
     // Use this for initialization
     void Start () {
-		
+		if (bGrainOn)
+        {
+            GrainModel.Settings temp = mPostProcessing.grain.settings;
+            mGrainTime += Time.deltaTime;
+            float mMin = 0.2f;
+            temp.intensity = mMin + Mathf.PingPong(mGrainTime, 0.1f);
+
+            if (mGrainTime >= 1)
+            {
+                mGrainTime = 0;
+            }
+        }
 	}
 	
 	// Update is called once per frame
@@ -33,31 +53,40 @@ public class PostProcessingControl : EventableObject {
     #region IEnumerator
     IEnumerator Rootine()
     {
-        float tempTime = 0;
-        DepthOfFieldModel.Settings tempDepth = new DepthOfFieldModel.Settings();
-        tempDepth = mPostProcessing.depthOfField.settings;
-        float originfocalLength = tempDepth.focalLength;
-
-        if (bIsUpper)
+        if (bSetDisActiveDepth)
         {
-            while (tempTime >= 1)
-            {
-                tempTime += Time.fixedDeltaTime;
-                tempDepth.focalLength = Mathf.Lerp(originfocalLength, mGoalDepth, tempTime / mDepthTime);
-
-                mPostProcessing.depthOfField.settings = tempDepth;
-                yield return new WaitForFixedUpdate();
-            }
+            mPostProcessing.depthOfField.enabled = false;
+            mPostProcessing.grain.enabled = true;
+            bGrainOn = true;
         }
-
-        if (bIsDowner)
+        else
         {
-            while (tempTime >= 1)
+            float tempTime = 0;
+            DepthOfFieldModel.Settings tempDepth = new DepthOfFieldModel.Settings();
+            tempDepth = mPostProcessing.depthOfField.settings;
+            float originfocalLength = tempDepth.focalLength;
+
+            if (bIsUpper)
             {
-                tempTime += Time.fixedDeltaTime;
-                tempDepth.focalLength = Mathf.Lerp(mGoalDepth, originfocalLength, tempTime / mDepthTime);
-                mPostProcessing.depthOfField.settings = tempDepth;
-                yield return new WaitForFixedUpdate();
+                while (tempTime >= 1)
+                {
+                    tempTime += Time.fixedDeltaTime;
+                    tempDepth.focalLength = Mathf.Lerp(originfocalLength, mGoalDepth, tempTime / mDepthTime);
+
+                    mPostProcessing.depthOfField.settings = tempDepth;
+                    yield return new WaitForFixedUpdate();
+                }
+            }
+
+            if (bIsDowner)
+            {
+                while (tempTime >= 1)
+                {
+                    tempTime += Time.fixedDeltaTime;
+                    tempDepth.focalLength = Mathf.Lerp(mGoalDepth, originfocalLength, tempTime / mDepthTime);
+                    mPostProcessing.depthOfField.settings = tempDepth;
+                    yield return new WaitForFixedUpdate();
+                }
             }
         }
 
@@ -74,6 +103,11 @@ public class PostProcessingControl : EventableObject {
 
     protected override void NextEvent()
     {
+        if (mNextEvent != null)
+        {
+            mNextEvent.Activate();
+        }
+
         base.NextEvent();
     }
 

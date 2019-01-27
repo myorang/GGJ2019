@@ -2,8 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.PostProcessing;
 
 public class GameManager : MonoBehaviour {
+
+    [Header("PostProcessing Control")]
+    [SerializeField]
+    private PostProcessingProfile mPostProcessing;
 
     [System.Serializable]
     class WallMaterial
@@ -55,6 +60,7 @@ public class GameManager : MonoBehaviour {
     // Use this for initialization
     void Start() {
         mStartEventObject.Activate();
+        SetPostProcessing();
     }
 
     // Update is called once per frame
@@ -113,6 +119,17 @@ public class GameManager : MonoBehaviour {
         }
     }
     #endregion
+
+    void SetPostProcessing()
+    {
+        DepthOfFieldModel.Settings temp = new DepthOfFieldModel.Settings();
+        temp = mPostProcessing.depthOfField.settings;
+        temp.focalLength = 35;
+
+        mPostProcessing.depthOfField.enabled = true;
+        mPostProcessing.depthOfField.settings = temp;
+        mPostProcessing.grain.enabled = false;
+    }
 
     
 }

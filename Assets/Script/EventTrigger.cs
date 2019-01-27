@@ -13,13 +13,14 @@ public class EventTrigger : MonoBehaviour
     {
         print("touch!");
 
-        //m_eventlist[0].Activate();
+        m_eventlist[0].Activate();
         m_NowPlayIdx = 0;
     }
 
     public void NextEvent()
     {
         m_NowPlayIdx++;
+
         if (m_eventlist.Count > m_NowPlayIdx)
         {
             //m_eventlist[m_NowPlayIdx].Activate();

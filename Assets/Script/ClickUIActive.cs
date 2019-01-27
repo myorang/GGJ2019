@@ -2,15 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundOffControl : EventableObject {
+public class ClickUIActive : EventableObject {
 
-    [Header("Audio Source")]
     [SerializeField]
-    private AudioSource mAudioSource;
-
-    [Header("Next Event")]
-    [SerializeField]
-    private EventableObject mNextEvent;
+    private GameObject mClickUI;
 
 	// Use this for initialization
 	void Start () {
@@ -22,18 +17,11 @@ public class SoundOffControl : EventableObject {
 		
 	}
 
-    #region IEnumerator
     IEnumerator Rootine()
     {
-        if (mAudioSource != null)
-        {
-            mAudioSource.Stop();
-        }
-
-        EndEvent();
+        mClickUI.SetActive(true);
         yield return null;
     }
-    #endregion
 
     #region override
     public override void Activate()
@@ -43,11 +31,6 @@ public class SoundOffControl : EventableObject {
 
     protected override void NextEvent()
     {
-        if (mNextEvent != null)
-        {
-            mNextEvent.Activate();
-        }
-
         base.NextEvent();
     }
 

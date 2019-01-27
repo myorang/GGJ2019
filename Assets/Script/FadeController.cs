@@ -86,6 +86,7 @@ public class FadeController : EventableObject {
             {
                 bEndOfPause = false;
                 ActiveTitle(false);
+                isStart = true;
             }
         }
 

@@ -4,30 +4,36 @@ using UnityEngine;
 
 public class CameraRotation : MonoBehaviour {
 
+    public bool bIsTurn;
+
     private Gyroscope mGyroscope;
     private bool bIsSupportGyroscope;
     private bool bIsActiveGyroscope;
 
-	// Use this for initialization
-	void Start () {
+    public float speedH = 2.0f;
+    public float speedV = 2.0f;
 
-        StartGyroscope();
-        
-        if (bIsActiveGyroscope)
+    private float yaw = 0.0f;
+    private float pitch = 0.0f;
+
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
+    void Update()
+    {
+        if (bIsTurn)
         {
-            ActiveGyroscope(bIsSupportGyroscope);
+            yaw += speedH * Input.GetAxis("Mouse X");
+            pitch -= speedV * Input.GetAxis("Mouse Y");
+
+            transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
         }
-	}
+    }
 	
 	// Update is called once per frame
-	void Update () {
-		if (bIsSupportGyroscope)
-        {
-            transform.rotation = mGyroscope.attitude;
-        }
-
-	}
-
     void StartGyroscope()
     {
         bIsSupportGyroscope = SystemInfo.supportsGyroscope;

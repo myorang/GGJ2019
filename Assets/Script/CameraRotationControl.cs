@@ -61,18 +61,26 @@ public class CameraRotationControl : EventableObject {
         Quaternion targetRotation 
             = Quaternion.LookRotation(mTargetTransform.position - mCameraTransform.position);
 
-        while (_nowTime < _endTime)
+        while (_nowTime/_endTime < 1f)
         {
+            if (Quaternion.Angle(mCameraTransform.rotation, targetRotation) <= 0.2f)
+            {
+                break;
+            }
+
             targetRotation
                = Quaternion.LookRotation(mTargetTransform.position - mCameraTransform.position);
-
+            _nowTime += Time.fixedDeltaTime;
             mCameraTransform.rotation = 
                 Quaternion.Slerp(mCameraTransform.rotation, targetRotation, 
-                (Time.fixedDeltaTime + _nowTime / _endTime) * mRotateSpeed);
+                (_nowTime / _endTime) * mRotateSpeed);
 
-            _nowTime += Time.fixedDeltaTime;
-            yield return new WaitForFixedUpdate();
+            
+            _nowTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
         }
+
+        mCameraTransform.rotation = targetRotation;
 
         EndEvent();
         yield return null;
